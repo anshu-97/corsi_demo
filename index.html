@@ -1,0 +1,69 @@
+<head>
+    <title>CorsiBlockDemo</title>
+    <!-- jsPsych Scripts -->
+    <script src="utils/jspsych/jspsych.js"></script>
+    <script src="utils/jspsych/plugin-fullscreen.js"></script>
+    <script src="https://unpkg.com/@jspsych-contrib/plugin-corsi-blocks@1.0.0"></script>
+    <!-- CSS -->
+    <link href="utils/jspsych/jspsych.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body></body>
+
+<script>
+    var timeline = []
+
+    var jsPsych = initJsPsych({
+        // show_progress_bar: true,
+        // message_progress_bar: "Completion",
+        on_finish: function () {
+            jsPsych.data.displayData("json")
+            // jsPsych.data
+            //     .get()
+            //     .localSave(
+            //         "json",
+            //         `${jsPsych
+            //             .data
+            //             .get()
+            //             .values()[0]["subject_id"]
+            //         }_IllusionGameEEG.json`
+            //     )
+        },
+    })
+
+    // Fullscreen mode
+    timeline.push({
+        type: jsPsychFullscreen,
+        fullscreen_mode: true,
+        delay_after: 0,
+    })
+
+    var blocks = {
+        type: jsPsychCorsiBlocks,
+        on_start: function(){
+            document.body.style.cursor= "none";
+        },
+        sequence: [3,1,4,2,5],
+        mode: 'display',
+        display_width: 650,
+        display_height: 650,
+        }
+
+    var response = {
+        on_start: function(){
+            document.body.style.cursor= "Auto";
+        },
+        type: jsPsychCorsiBlocks,
+        sequence: [3,1,4,2,5],
+        mode: 'input',
+        display_width: 650,
+        display_height: 650,
+
+        }
+
+    timeline.push(blocks, response)
+
+    jsPsych.run(timeline)
+
+</script>
+</html>
